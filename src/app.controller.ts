@@ -7,6 +7,6 @@ export class AppController {
 
   @Post('/notify')
   notify(@Request() req) {
-    return this.appService.postMessage(req.body);
+    return this.appService.notify(req.body);
   }
 }

@@ -5,9 +5,11 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { BullModule } from '@nestjs/bull';
 import { NotificationsProcessor } from './app.processor';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
     MailerModule.forRoot({
       transport: {
         host: 'sandbox.smtp.mailtrap.io',

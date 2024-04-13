@@ -8,12 +8,10 @@ export class NotificationsProcessor {
 
   @Process('email')
   async email(job: Job) {
-    const result = await this.mailerService.sendMail({
+    return this.mailerService.sendMail({
       to: job.data.email,
       subject: 'Test Email',
       template: 'test',
     });
-
-    return result;
   }
 }
