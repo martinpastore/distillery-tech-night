@@ -5,8 +5,8 @@ import { AppService } from './app.service';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Post('/notify')
-  notify(@Request() req) {
-    return this.appService.notify(req.body);
+  @Post('/user/create')
+  createUser(@Request() req) {
+    return this.appService.createUser(req.body.email);
   }
 }

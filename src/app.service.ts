@@ -14,22 +14,21 @@ export class AppService {
     @InjectQueue('notifications') private notificationsQueue: Queue,
   ) {}
 
-  async notify(message: any) {
+  async createUser(email: string) {
     try {
-      await this.notificationsQueue.add('email', message, { delay: 10000 });
+      await admin.auth().createUser({
+        email,
+      });
 
       const uid = randomUUID();
 
-      const event = {
-        ...message,
-        date: new Date().getTime(),
-        name: 'NotificationSent',
-        uid,
-      };
+      await this.notificationsQueue.add(
+        'email',
+        { email, uid },
+        { delay: 10000 },
+      );
 
-      await admin.firestore().collection('events').doc(uid).set(event);
-
-      return event;
+      return { email, uid };
     } catch (err) {
       Logger.error(err);
       throw new InternalServerErrorException(err);
